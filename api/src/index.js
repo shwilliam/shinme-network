@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const shortid = require('shortid')
-const {Post, Reply} = require('./models/post')
+const {Post, Reply, Board} = require('./models/post')
 const {upload} = require('./services/image-upload')
 
 const PORT = process.env.PORT || 3000
@@ -26,27 +26,35 @@ app.get('/', (_, res) => {
   res.send('🌼')
 })
 
-app.get('/posts', (_, res) => {
-  Post.find((e, posts) => {
-    if (e)
-      res.status(422).send({error: 'Error fetching posts', detail: e.message})
-    else {
-      res.send(posts)
-    }
-  })
+app.get('/boards', async (_, res) => {
+  try {
+    const boards = await Board.find()
+    res.send(boards)
+  } catch (e) {
+    res.status(422).send({error: 'Error fetching posts', detail: e.message})
+  }
 })
 
-app.get('/posts/:id', (req, res) => {
-  Post.findOne({_id: req.params.id}, (e, post) => {
-    if (e)
-      res.status(422).send({error: 'Error fetching post', detail: e.message})
-    else {
-      res.send(post)
-    }
-  })
+app.get('/posts/:board', async (req, res) => {
+  try {
+    const board = await Board.findOne({_id: req.params.board})
+    res.send(board.posts)
+  } catch (e) {
+    res.status(422).send({error: 'Error fetching posts', detail: e.message})
+  }
 })
 
-app.post('/posts', upload.single('image'), async (req, res) => {
+app.get('/posts/:board/:id', async (req, res) => {
+  try {
+    const board = await Board.findOne({_id: req.params.board})
+    const post = board.posts.find(({_id}) => _id === req.parms.id)
+    res.send(post)
+  } catch (e) {
+    res.status(422).send({error: 'Error fetching post', detail: e.message})
+  }
+})
+
+app.post('/posts/:board', upload.single('image'), async (req, res) => {
   try {
     const {name, email, title, comment, path} = req.body
 
@@ -61,10 +69,10 @@ app.post('/posts', upload.single('image'), async (req, res) => {
       })
 
       if (pathArr.length === 1) {
-        await Post.findOneAndUpdate(
-          {_id: pathArr[0]},
-          {$push: {replies: reply}},
-        )
+        const board = await Board.findOne({_id: req.params.board})
+        const post = board.posts.find(({_id}) => _id === pathArr[0])
+        post.replies.push(reply)
+        board.save()
       } else {
         // TODO: allow nested comments
         const post = await Post.findOne({_id: pathArr[0]})
@@ -84,15 +92,11 @@ app.post('/posts', upload.single('image'), async (req, res) => {
         imageURL: req.file && req.file.location,
       })
 
-      post.save((e, post) => {
-        if (e)
-          res
-            .status(422)
-            .send({error: 'Error saving to database', detail: e.message})
-        else {
-          res.json(post)
-        }
-      })
+      await Board.findOneAndUpdate(
+        {_id: req.params.board},
+        {$push: {posts: post}},
+      )
+      res.json(post)
     }
   } catch (e) {
     res.status(422).send({error: 'Error adding new post', detail: e.message})

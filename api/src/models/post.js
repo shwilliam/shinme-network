@@ -7,7 +7,6 @@ const replySchema = new mongoose.Schema({
   comment: String,
   imageURL: String,
   createdAt: {type: Date, default: Date.now},
-  replies: [this],
 })
 
 const postSchema = new mongoose.Schema({
@@ -21,8 +20,14 @@ const postSchema = new mongoose.Schema({
   replies: [replySchema],
 })
 
+const boardSchema = new mongoose.Schema({
+  _id: String,
+  title: String,
+  posts: [postSchema],
+})
+
 const Reply = mongoose.model('Reply', replySchema)
-
 const Post = mongoose.model('Post', postSchema)
+const Board = mongoose.model('Board', boardSchema)
 
-module.exports = {Reply, Post}
+module.exports = {Reply, Post, Board}
