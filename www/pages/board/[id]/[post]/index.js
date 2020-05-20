@@ -97,7 +97,7 @@ const Post = ({post, boards}) => {
           <h2>Comments</h2>
 
           <ul className="post__comments">
-            {post.replies.map(
+            {post.replies?.map(
               ({_id, name, email, comment, imageURL, createdAt, replies}) => (
                 <li key={_id} className="post__comment">
                   <p>Name: {name}</p>
@@ -106,7 +106,7 @@ const Post = ({post, boards}) => {
 
                   {replies && (
                     <ul>
-                      {replies.map(
+                      {replies?.map(
                         ({_id, name, email, comment, imageURL, createdAt}) => (
                           <li key={_id}>
                             <p>Name: {name}</p>
