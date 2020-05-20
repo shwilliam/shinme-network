@@ -14,7 +14,7 @@ const Home = ({boards}) => (
   <div className="site__layout">
     <Nav className="site__nav" boards={boards} />
 
-    <main className="site__main">
+    <main className="site__main -center">
       <span role="img" aria-label="seedling">
         🌱
       </span>

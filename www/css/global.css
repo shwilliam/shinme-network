@@ -80,6 +80,12 @@ a:visited {
   padding: var(--rhythm);
 }
 
+.site__main.-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .nav__title,
 .nav__title:visited {
   font-size: 1.3rem;
