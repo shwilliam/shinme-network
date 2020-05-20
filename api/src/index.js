@@ -112,22 +112,30 @@ mongoose
       Board.deleteMany({}),
     ])
 
-    const boardPlants = new Board({
-      title: 'Plants',
-      _id: 'plants',
-    })
-    const boardFood = new Board({
-      title: 'Food',
-      _id: 'food',
-    })
-    const boardGame = new Board({
-      title: 'Game',
-      _id: 'game',
-    })
+    const boards = [
+      'Plants',
+      'Insects',
+      'Animals',
+      'Coffee',
+      'Cooking',
+      'Ramen',
+      'Cameras',
+      'Electronics',
+      'Games',
+      'Art',
+      'Streaming',
+      'Computer',
+      'Wallpapers',
+      'Misc',
+    ].map(
+      title =>
+        new Board({
+          title,
+          _id: title.toLowerCase(),
+        }),
+    )
 
-    await boardPlants.save()
-    await boardFood.save()
-    await boardGame.save()
+    await Promise.all(boards.map(board => board.save()))
 
     app.listen(PORT, () => {
       console.log(`listening on *:${PORT}`)
