@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const shortid = require('shortid')
 const {Post, Reply, Board} = require('./models/post')
@@ -16,6 +17,7 @@ const DB_URL = 'mongodb://mongo:27017/shinme'
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(cors())
 
 app.get('/', (_, res) => {
   res.send('🌼')
