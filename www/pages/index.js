@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Nav from '../components/nav'
 
 export async function getServerSideProps() {
@@ -13,11 +12,6 @@ export async function getServerSideProps() {
 
 const Home = ({boards}) => (
   <div className="site__layout">
-    <Head>
-      <title>Shinme Network</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
     <Nav className="site__nav" boards={boards} />
 
     <main className="site__main">
