@@ -1,3 +1,4 @@
+import {useRef, useState} from 'react'
 import {useRouter} from 'next/router'
 import {Nav, Post} from '../../../components'
 import {API_ENDPOINT} from '../../../utils/'
@@ -17,11 +18,20 @@ export async function getServerSideProps(context) {
 }
 
 const Board = ({posts, boards}) => {
+  const [error, setError] = useState({})
+  const imageUploadRef = useRef()
   const router = useRouter()
   const {id} = router.query
 
   const handleSubmit = async e => {
     e.preventDefault()
+
+    const imageUploadInput = imageUploadRef.current
+    const imageUpload = imageUploadInput.files[0]
+    if (imageUpload && imageUpload.size > (1024 * 1024) / 2) {
+      setError({image: 'File too large'})
+      return
+    }
 
     const formData = new FormData(e.target)
 
@@ -83,11 +93,13 @@ const Board = ({posts, boards}) => {
               Image:
             </label>
             <input
+              ref={imageUploadRef}
               type="file"
               name="image"
               id="form__board-image"
               className="form__input"
             />
+            <span className="form__input-error">{error?.image}</span>
           </div>
 
           <div className="form__input-container">

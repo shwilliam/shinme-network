@@ -1,3 +1,4 @@
+import {useRef, useState} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {Nav, Post, Reply} from '../../../../components'
@@ -17,11 +18,20 @@ export async function getServerSideProps(context) {
 }
 
 const PostPage = ({post, boards}) => {
+  const [error, setError] = useState({})
+  const imageUploadRef = useRef()
   const router = useRouter()
   const {id} = router.query
 
   const handleSubmit = async e => {
     e.preventDefault()
+
+    const imageUploadInput = imageUploadRef.current
+    const imageUpload = imageUploadInput.files[0]
+    if (imageUpload && imageUpload.size > (1024 * 1024) / 2) {
+      setError({image: 'File too large'})
+      return
+    }
 
     const formData = new FormData(e.target)
     formData.set('path', JSON.stringify([post._id]))
@@ -88,7 +98,13 @@ const PostPage = ({post, boards}) => {
               <label className="form__label" htmlFor="post-image">
                 Image:
               </label>
-              <input type="file" name="image" id="post-image" />
+              <input
+                ref={imageUploadRef}
+                type="file"
+                name="image"
+                id="post-image"
+              />
+              <span className="form__input-error">{error?.image}</span>
             </div>
 
             <div className="form__input-container">

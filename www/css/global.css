@@ -112,6 +112,13 @@ a:visited {
   justify-content: flex-end;
 }
 
+.form__input-error {
+  white-space: nowrap;
+  font-size: 0.8rem;
+  align-self: center;
+  margin-right: 3px;
+}
+
 .form__submit {
   margin: 2px;
 }
