@@ -2,9 +2,9 @@
   --rhythm: 20px;
   --color__bg: #ffffec;
   --color__text: #222;
-  --color__text-alt: #850008;
+  --color__text-alt: #800000;
   --color__accent: #fc003d;
-  --color__accent-alt: #083d37;
+  --color__accent-alt: #117743;
 }
 
 * {
@@ -42,8 +42,26 @@ a:visited {
   color: var(--color__accent-alt);
 }
 
-img {
+.image {
   min-width: 40px;
+  max-width: 300px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 1.7rem;
+  text-transform: capitalize;
+  color: var(--color__text-alt);
+  border-bottom: 1px solid var(--color__text);
+}
+
+.banner {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: center;
+  background-color: #e04000;
+  color: #fff;
+  font-weight: 600;
 }
 
 .site__layout {
@@ -64,7 +82,7 @@ img {
 
 .nav__title,
 .nav__title:visited {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   text-decoration: none;
   color: var(--color__accent);
@@ -81,32 +99,46 @@ img {
 }
 
 .form {
-  padding: var(--rhythm) 0;
+  padding: calc(var(--rhythm) / 2) 0;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .form__input-container {
   display: flex;
 }
 
+.form__input-container.-right {
+  justify-content: flex-end;
+}
+
+.form__submit {
+  margin: 2px;
+}
+
 .form__label {
   font-size: 1.2rem;
   font-weight: 600;
-  background-color: #f69e7e;
+  background-color: #ea8;
   color: var(--color__text-alt);
+  min-width: 120px;
+  padding: 0 3px;
 }
 
 .form__input {
   width: 100%;
+  resize: none;
+  margin: 2px;
 }
 
 .board__posts {
-  border-top: 1px solid var(--color__accent-alt);
   margin: 0;
-  padding: var(--rhythm) 0;
+  padding: 0;
 }
 
 .board__post {
   list-style: none;
+  border-top: 1px solid var(--color__text);
 }
 
 .board__replies {
@@ -115,15 +147,56 @@ img {
 }
 
 .board__reply {
-  background-color: #f2ddd2;
   list-style: none;
+}
+
+.post,
+.reply {
+  padding-bottom: calc(var(--rhythm) / 2);
+}
+
+.reply {
   margin: calc(var(--rhythm) / 2) 0;
+  background-color: #f2ddd2;
+}
+
+.post__header,
+.reply__header {
+  padding: calc(var(--rhythm) / 4);
+}
+
+.post__content,
+.reply__content {
+  padding: 0 var(--rhythm);
+  overflow: auto;
+}
+
+.post__image,
+.reply__image {
+  float: left;
+  margin: 0.25rem var(--rhythm) var(--rhythm) 0;
+}
+
+.post__name,
+.reply__name {
+  font-weight: 600;
+  color: #cc1105;
+  margin: 0 3px;
+}
+
+.post__date,
+.reply__date {
+  margin: 0 3px;
+}
+
+.post__title {
+  margin: 0 3px;
 }
 
 .post__comments {
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--color__accent-alt);
+  border-top: 1px solid var(--color__text);
 }
 
 .post__comment {

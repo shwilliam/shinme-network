@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
-import Link from 'next/link'
 import Nav from '../../../components/nav'
+import Post from '../../../components/post'
 
 export async function getServerSideProps(context) {
   const boards = await fetch(`${process.env.API_ENDPOINT}/boards`).then(res =>
@@ -40,9 +40,21 @@ const Board = ({posts, boards}) => {
       <Nav className="site__nav" boards={boards} />
 
       <main className="site__main">
-        <h1>Board: {id}</h1>
+        <h1 className="heading">{id}</h1>
 
         <form onSubmit={handleSubmit} className="form">
+          <div className="form__input-container">
+            <label className="form__label" htmlFor="form__board-title">
+              Title:
+            </label>
+            <input
+              type="text"
+              name="title"
+              id="form__board-title"
+              className="form__input"
+            />
+          </div>
+
           <div className="form__input-container">
             <label className="form__label" htmlFor="board-name">
               Name:
@@ -68,30 +80,6 @@ const Board = ({posts, boards}) => {
           </div>
 
           <div className="form__input-container">
-            <label className="form__label" htmlFor="form__board-title">
-              Title:
-            </label>
-            <input
-              type="text"
-              name="title"
-              id="form__board-title"
-              className="form__input"
-            />
-          </div>
-
-          <div className="form__input-container">
-            <label className="form__label" htmlFor="form__board-comment">
-              Comment:
-            </label>
-            <input
-              type="text"
-              name="comment"
-              id="form__board-comment"
-              className="form__input"
-            />
-          </div>
-
-          <div className="form__input-container">
             <label className="form__label" htmlFor="form__board-image">
               Image:
             </label>
@@ -104,7 +92,21 @@ const Board = ({posts, boards}) => {
           </div>
 
           <div className="form__input-container">
-            <button type="submit">Publish</button>
+            <label className="form__label" htmlFor="form__board-comment">
+              Comment:
+            </label>
+            <textarea
+              name="comment"
+              id="form__board-comment"
+              className="form__input"
+              rows="5"
+            />
+          </div>
+
+          <div className="form__input-container -right">
+            <button className="form__submit" type="submit">
+              Publish
+            </button>
           </div>
         </form>
 
@@ -121,39 +123,17 @@ const Board = ({posts, boards}) => {
               replies,
             }) => (
               <li key={_id} className="board__post">
-                <Link href="/board/[id]/[board]" as={`/board/${id}/${_id}`}>
-                  <a>
-                    {title || 'untitled'} ({name || 'anon'})
-                  </a>
-                </Link>
-
-                {createdAt && <p>{createdAt}</p>}
-                {comment && <p>{comment}</p>}
-
-                <div>
-                  <img src={imageURL} />
-                </div>
-
-                {replies && (
-                  <ul className="board__replies">
-                    {replies.map(
-                      ({_id, name, email, comment, imageURL, createdAt}) => (
-                        <li key={_id} className="board__reply">
-                          <p>
-                            {title || 'untitled'} ({name || 'anon'})
-                          </p>
-
-                          {createdAt && <p>{createdAt}</p>}
-                          {comment && <p>{comment}</p>}
-
-                          <div>
-                            <img src={imageURL} />
-                          </div>
-                        </li>
-                      ),
-                    )}
-                  </ul>
-                )}
+                <Post
+                  name={name}
+                  email={email}
+                  title={title}
+                  comment={comment}
+                  imageURL={imageURL}
+                  createdAt={createdAt}
+                  replies={replies}
+                  boardID={id}
+                  postID={_id}
+                />
               </li>
             ),
           )}

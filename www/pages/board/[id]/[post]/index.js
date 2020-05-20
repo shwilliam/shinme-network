@@ -1,5 +1,8 @@
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 import Nav from '../../../../components/nav'
+import Reply from '../../../../components/reply'
+import Post from '../../../../components/post'
 
 export async function getServerSideProps(context) {
   const boards = await fetch(`${process.env.API_ENDPOINT}/boards`).then(res =>
@@ -14,7 +17,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const Post = ({post, boards}) => {
+const PostPage = ({post, boards}) => {
   const router = useRouter()
   const {id} = router.query
 
@@ -39,8 +42,23 @@ const Post = ({post, boards}) => {
       <Nav className="site__nav" boards={boards} />
 
       <main className="site__main">
-        <h1>Post: {post.title || 'untitled'}</h1>
-        {post.imageURL && <img src={post.imageURL} />}
+        <Link href="/board/[id]" as={`/board/${id}`}>
+          <a>[ Back to {id} ]</a>
+        </Link>
+
+        <section>
+          <header className="banner">{post.title || 'untitled'}</header>
+
+          <Post
+            name={post.name}
+            comment={post.comment}
+            createdAt={post.createdAt}
+            imageURL={post.imageURL}
+            boardID={id}
+            postID={post._id}
+            display
+          />
+        </section>
 
         <section>
           <form onSubmit={handleSubmit} className="form">
@@ -69,18 +87,6 @@ const Post = ({post, boards}) => {
             </div>
 
             <div className="form__input-container">
-              <label className="form__label" htmlFor="post-comment">
-                Comment:
-              </label>
-              <input
-                type="text"
-                name="comment"
-                id="post-comment"
-                className="form__input"
-              />
-            </div>
-
-            <div className="form__input-container">
               <label className="form__label" htmlFor="post-image">
                 Image:
               </label>
@@ -88,35 +94,37 @@ const Post = ({post, boards}) => {
             </div>
 
             <div className="form__input-container">
+              <label className="form__label" htmlFor="post-comment">
+                Comment:
+              </label>
+              <textarea
+                name="comment"
+                id="post-comment"
+                className="form__input"
+                rows="5"
+              />
+            </div>
+
+            <div className="form__input-container -right">
               <button type="submit">Publish</button>
             </div>
           </form>
         </section>
 
         <section>
-          <h2>Comments</h2>
+          <h2>Replies</h2>
 
           <ul className="post__comments">
             {post.replies?.map(
               ({_id, name, email, comment, imageURL, createdAt, replies}) => (
                 <li key={_id} className="post__comment">
-                  <p>Name: {name}</p>
-                  {imageURL && <img src={imageURL} />}
-                  <p>{comment}</p>
-
-                  {replies && (
-                    <ul>
-                      {replies?.map(
-                        ({_id, name, email, comment, imageURL, createdAt}) => (
-                          <li key={_id}>
-                            <p>Name: {name}</p>
-                            {imageURL && <img src={imageURL} />}
-                            <p>{comment}</p>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  )}
+                  <Reply
+                    name={name}
+                    comment={comment}
+                    imageURL={imageURL}
+                    createdAt={createdAt}
+                    replies={replies}
+                  />
                 </li>
               ),
             )}
@@ -127,4 +135,4 @@ const Post = ({post, boards}) => {
   )
 }
 
-export default Post
+export default PostPage
