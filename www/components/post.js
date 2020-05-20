@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Reply from './reply'
-import {format} from '../utils/format-timestamp'
+import {format} from '../utils'
+import {Reply} from './index'
 
-const Post = ({
+export const Post = ({
   name,
   title,
   comment,
@@ -47,5 +47,3 @@ const Post = ({
     )}
   </div>
 )
-
-export default Post

@@ -1,6 +1,6 @@
-import {format} from '../utils/format-timestamp'
+import {format} from '../utils'
 
-const Reply = ({name, comment, createdAt, imageURL}) => (
+export const Reply = ({name, comment, createdAt, imageURL}) => (
   <div className="reply">
     <div className="reply__header">
       <span className="reply__name">{name || 'anon'}</span>
@@ -13,5 +13,3 @@ const Reply = ({name, comment, createdAt, imageURL}) => (
     </p>
   </div>
 )
-
-export default Reply

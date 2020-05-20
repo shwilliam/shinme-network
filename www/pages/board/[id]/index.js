@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
-import Nav from '../../../components/nav'
-import Post from '../../../components/post'
+import {Nav, Post} from '../../../components'
+import {API_ENDPOINT} from '../../../utils/'
 
 export async function getServerSideProps(context) {
   const boards = await fetch(`${process.env.API_ENDPOINT}/boards`).then(res =>
@@ -26,13 +26,12 @@ const Board = ({posts, boards}) => {
     const formData = new FormData(e.target)
 
     try {
-      await fetch(`http://localhost:3000/posts/${id}`, {
+      await fetch(`${API_ENDPOINT}/posts/${id}`, {
         method: 'POST',
         body: formData,
       })
+      location.reload() // FIXME
     } catch (e) {} // FIXME
-
-    location.reload() // FIXME
   }
 
   return (

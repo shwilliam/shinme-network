@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Nav = ({boards, ...props}) => (
+export const Nav = ({boards, ...props}) => (
   <nav {...props}>
     <h1>
       <Link href="/">
@@ -19,5 +19,3 @@ const Nav = ({boards, ...props}) => (
     </ul>
   </nav>
 )
-
-export default Nav

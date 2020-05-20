@@ -1,4 +1,4 @@
-import Nav from '../components/nav'
+import {Nav} from '../components'
 
 export async function getServerSideProps() {
   const boards = await fetch(`${process.env.API_ENDPOINT}/boards`).then(res =>
