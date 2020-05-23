@@ -21,6 +21,7 @@ const seed = async () => {
     'Computers',
     'Keyboards',
     'Games',
+    'Requests',
     'Misc',
   ].map(
     title =>
