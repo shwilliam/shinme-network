@@ -90,10 +90,14 @@ a:visited {
   padding: var(--rhythm);
 }
 
-.site__main.-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.site__welcome {
+  display: block;
+  max-width: 600px;
+}
+
+.sprout {
+  display: inline-block;
+  margin: var(--rhythm) 0;
 }
 
 .nav__title,
