@@ -1,6 +1,7 @@
 import {useRef, useState} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
+import FourOhFour from '../../../404'
 import {Nav, Post, Reply} from '../../../../components'
 import {API_ENDPOINT} from '../../../../utils'
 
@@ -53,6 +54,8 @@ const PostPage = ({post, boards}) => {
       location.reload() // FIXME
     } catch (e) {} // FIXME
   }
+
+  if (!post?._id) return <FourOhFour />
 
   return (
     <div className="site__layout">

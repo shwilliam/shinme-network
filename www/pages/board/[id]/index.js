@@ -1,5 +1,6 @@
 import {useRef, useState} from 'react'
 import {useRouter} from 'next/router'
+import FourOhFour from '../../404'
 import {Nav, Post} from '../../../components'
 import {API_ENDPOINT} from '../../../utils/'
 
@@ -53,6 +54,8 @@ const Board = ({posts, boards}) => {
       location.reload() // FIXME
     } catch (e) {} // FIXME
   }
+
+  if (!Array.isArray(posts)) return <FourOhFour />
 
   return (
     <div className="site__layout">
@@ -122,15 +125,7 @@ const Board = ({posts, boards}) => {
 
         <ul className="board__posts">
           {posts.map(
-            ({
-              _id,
-              name,
-              title,
-              comment,
-              imageURL,
-              createdAt,
-              replies,
-            }) => (
+            ({_id, name, title, comment, imageURL, createdAt, replies}) => (
               <li key={_id} className="board__post">
                 <Post
                   name={name}
