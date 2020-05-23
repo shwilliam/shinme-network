@@ -8,7 +8,7 @@ const postsRouter = express.Router()
 postsRouter.get('/:board', async (req, res) => {
   try {
     const board = await Board.findOne({_id: req.params.board})
-    res.send(board.posts)
+    res.send(board.posts.reverse())
   } catch (e) {
     res.status(422).send({error: 'Error fetching posts', detail: e.message})
   }

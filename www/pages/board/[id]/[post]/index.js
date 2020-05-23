@@ -139,19 +139,25 @@ const PostPage = ({post, boards}) => {
           <h2>Replies</h2>
 
           <ul className="post__comments">
-            {post.replies?.map(
-              ({_id, name, email, comment, imageURL, createdAt, replies}) => (
-                <li key={_id} className="post__comment">
-                  <Reply
-                    name={name}
-                    comment={comment}
-                    imageURL={imageURL}
-                    createdAt={createdAt}
-                    replies={replies}
-                  />
-                </li>
-              ),
-            )}
+            {post.replies
+              ?.sort(
+                (replyA, replyB) =>
+                  new Date(replyA.createdAt).getTime() <
+                  new Date(replyB.createdAt).getTime(),
+              )
+              .map(
+                ({_id, name, email, comment, imageURL, createdAt, replies}) => (
+                  <li key={_id} className="post__comment">
+                    <Reply
+                      name={name}
+                      comment={comment}
+                      imageURL={imageURL}
+                      createdAt={createdAt}
+                      replies={replies}
+                    />
+                  </li>
+                ),
+              )}
           </ul>
         </section>
       </main>
