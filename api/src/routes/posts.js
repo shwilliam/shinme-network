@@ -1,6 +1,6 @@
 const express = require('express')
 const shortid = require('shortid')
-const {upload} = require('../services/image-upload')
+const {upload} = require('../services')
 const {Board, Post, Reply} = require('../models')
 
 const postsRouter = express.Router()
