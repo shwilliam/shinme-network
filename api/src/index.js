@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const shortid = require('shortid')
-const {Post, Reply, Board} = require('./models/post')
+const {Post, Reply, Board} = require('./models')
 const {upload} = require('./services/image-upload')
 
 const PORT = process.env.PORT || 3000

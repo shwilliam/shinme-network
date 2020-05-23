@@ -1,13 +1,5 @@
 const mongoose = require('mongoose')
-
-const replySchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  email: String,
-  comment: String,
-  imageURL: String,
-  createdAt: {type: Date, default: Date.now},
-})
+const {replySchema} = require('./reply')
 
 const postSchema = new mongoose.Schema({
   _id: String,
@@ -20,14 +12,6 @@ const postSchema = new mongoose.Schema({
   replies: [replySchema],
 })
 
-const boardSchema = new mongoose.Schema({
-  _id: String,
-  title: String,
-  posts: [postSchema],
-})
-
-const Reply = mongoose.model('Reply', replySchema)
 const Post = mongoose.model('Post', postSchema)
-const Board = mongoose.model('Board', boardSchema)
 
-module.exports = {Reply, Post, Board}
+module.exports = {Post, postSchema}
