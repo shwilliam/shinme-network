@@ -64,7 +64,9 @@ const PostPage = ({post, boards}) => {
         </Link>
 
         <section>
-          <header className="banner">{post.title || 'untitled'}</header>
+          <header>
+            <h1 className="banner">{post.title || 'untitled'}</h1>
+          </header>
 
           <Post
             name={post.name}
@@ -136,7 +138,7 @@ const PostPage = ({post, boards}) => {
         </section>
 
         <section>
-          <h2>Replies</h2>
+          <h2 className="visibly-hidden">Replies</h2>
 
           <ul className="post__comments">
             {post.replies

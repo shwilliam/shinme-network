@@ -42,6 +42,15 @@ a:visited {
   color: var(--color__accent-alt);
 }
 
+.visibly-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .image {
   min-width: 40px;
   max-width: 300px;

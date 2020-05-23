@@ -13,8 +13,8 @@ export const Post = ({
   replies,
   display = false,
 }) => (
-  <div className="post">
-    <p className="post__header">
+  <article className="post">
+    <header className="post__header">
       <span className="post__name">{name || 'anon'}</span>
       {title && <span className="post__title">{title}</span>}
       <span className="post__date">{createdAt && format(createdAt)}</span>
@@ -24,7 +24,7 @@ export const Post = ({
           <a>[ Reply ]</a>
         </Link>
       )}
-    </p>
+    </header>
 
     <p className="post__content">
       {imageURL && <img className="image post__image" src={imageURL} />}
@@ -45,5 +45,5 @@ export const Post = ({
         ))}
       </ul>
     )}
-  </div>
+  </article>
 )

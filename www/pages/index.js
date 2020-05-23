@@ -12,6 +12,7 @@ export async function getServerSideProps() {
 
 const Home = ({boards}) => (
   <div className="site__layout">
+    <h1 className="visibly-hidden">Shinme Network</h1>
     <Nav className="site__nav" boards={boards} />
 
     <main className="site__main -center">
