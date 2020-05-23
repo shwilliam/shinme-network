@@ -33,7 +33,7 @@ export const Post = ({
 
     {replies && (
       <ul className="board__replies">
-        {replies.map(({_id, name, email, comment, imageURL, createdAt}) => (
+        {replies.map(({_id, name, comment, imageURL, createdAt}) => (
           <li key={_id} className="board__reply">
             <Reply
               name={name}

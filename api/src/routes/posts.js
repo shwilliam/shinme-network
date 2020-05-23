@@ -26,7 +26,7 @@ postsRouter.get('/:board/:id', async (req, res) => {
 
 postsRouter.post('/:board', upload.single('image'), async (req, res) => {
   try {
-    const {name, email, title, comment, path} = req.body
+    const {name, title, comment, path} = req.body
 
     if (!comment && !req.file)
       throw new Error('Must provide either an image or comment')
@@ -37,7 +37,6 @@ postsRouter.post('/:board', upload.single('image'), async (req, res) => {
       const reply = new Reply({
         _id: shortid.generate(),
         name,
-        email,
         comment,
         imageURL: req.file && req.file.location,
       })
@@ -59,7 +58,6 @@ postsRouter.post('/:board', upload.single('image'), async (req, res) => {
       const post = new Post({
         _id: shortid.generate(),
         name,
-        email,
         title,
         comment,
         imageURL: req.file && req.file.location,

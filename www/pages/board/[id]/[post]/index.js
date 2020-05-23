@@ -82,30 +82,6 @@ const PostPage = ({post, boards}) => {
         <section>
           <form onSubmit={handleSubmit} className="form">
             <div className="form__input-container">
-              <label className="form__label" htmlFor="post-name">
-                Name:
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="post-name"
-                className="form__input"
-              />
-            </div>
-
-            <div className="form__input-container">
-              <label className="form__label" htmlFor="post-email">
-                Email:
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="post-email"
-                className="form__input"
-              />
-            </div>
-
-            <div className="form__input-container">
               <label className="form__label" htmlFor="post-image">
                 Image:
               </label>
@@ -116,6 +92,18 @@ const PostPage = ({post, boards}) => {
                 id="post-image"
               />
               <span className="form__input-error">{error?.image}</span>
+            </div>
+
+            <div className="form__input-container">
+              <label className="form__label" htmlFor="post-name">
+                Name:
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="post-name"
+                className="form__input"
+              />
             </div>
 
             <div className="form__input-container">
@@ -147,19 +135,17 @@ const PostPage = ({post, boards}) => {
                   new Date(replyA.createdAt).getTime() <
                   new Date(replyB.createdAt).getTime(),
               )
-              .map(
-                ({_id, name, email, comment, imageURL, createdAt, replies}) => (
-                  <li key={_id} className="post__comment">
-                    <Reply
-                      name={name}
-                      comment={comment}
-                      imageURL={imageURL}
-                      createdAt={createdAt}
-                      replies={replies}
-                    />
-                  </li>
-                ),
-              )}
+              .map(({_id, name, comment, imageURL, createdAt, replies}) => (
+                <li key={_id} className="post__comment">
+                  <Reply
+                    name={name}
+                    comment={comment}
+                    imageURL={imageURL}
+                    createdAt={createdAt}
+                    replies={replies}
+                  />
+                </li>
+              ))}
           </ul>
         </section>
       </main>

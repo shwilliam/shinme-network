@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const replySchema = new mongoose.Schema({
   _id: String,
   name: String,
-  email: String,
   comment: String,
   imageURL: String,
   createdAt: {type: Date, default: Date.now},

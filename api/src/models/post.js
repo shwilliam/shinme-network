@@ -4,7 +4,6 @@ const {replySchema} = require('./reply')
 const postSchema = new mongoose.Schema({
   _id: String,
   name: String,
-  email: String,
   title: String,
   comment: String,
   imageURL: String,

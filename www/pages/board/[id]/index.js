@@ -63,6 +63,20 @@ const Board = ({posts, boards}) => {
 
         <form onSubmit={handleSubmit} className="form">
           <div className="form__input-container">
+            <label className="form__label" htmlFor="form__board-image">
+              Image:
+            </label>
+            <input
+              ref={imageUploadRef}
+              type="file"
+              name="image"
+              id="form__board-image"
+              className="form__input"
+            />
+            <span className="form__input-error">{error?.image}</span>
+          </div>
+
+          <div className="form__input-container">
             <label className="form__label" htmlFor="form__board-title">
               Title:
             </label>
@@ -84,32 +98,6 @@ const Board = ({posts, boards}) => {
               id="form__board-name"
               className="form__input"
             />
-          </div>
-
-          <div className="form__input-container">
-            <label className="form__label" htmlFor="board-email">
-              Email:
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="form__board-email"
-              className="form__input"
-            />
-          </div>
-
-          <div className="form__input-container">
-            <label className="form__label" htmlFor="form__board-image">
-              Image:
-            </label>
-            <input
-              ref={imageUploadRef}
-              type="file"
-              name="image"
-              id="form__board-image"
-              className="form__input"
-            />
-            <span className="form__input-error">{error?.image}</span>
           </div>
 
           <div className="form__input-container">
@@ -137,7 +125,6 @@ const Board = ({posts, boards}) => {
             ({
               _id,
               name,
-              email,
               title,
               comment,
               imageURL,
@@ -147,7 +134,6 @@ const Board = ({posts, boards}) => {
               <li key={_id} className="board__post">
                 <Post
                   name={name}
-                  email={email}
                   title={title}
                   comment={comment}
                   imageURL={imageURL}
