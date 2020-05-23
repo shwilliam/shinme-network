@@ -81,6 +81,7 @@ a:visited {
   padding: var(--rhythm);
   flex-basis: 120px;
   border-right: 1px solid #222;
+  min-height: 100vh;
 }
 
 .site__main {
