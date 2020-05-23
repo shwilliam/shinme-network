@@ -4,6 +4,7 @@ import {Nav, Post} from '../../../components'
 import {API_ENDPOINT} from '../../../utils/'
 
 export async function getServerSideProps(context) {
+  // TODO: dry up requests
   const boards = await fetch(`${process.env.API_ENDPOINT}/boards`).then(res =>
     res.json(),
   )
@@ -23,6 +24,7 @@ const Board = ({posts, boards}) => {
   const router = useRouter()
   const {id} = router.query
 
+  // TODO: refactor form logic
   const handleSubmit = async e => {
     e.preventDefault()
 
@@ -34,6 +36,14 @@ const Board = ({posts, boards}) => {
     }
 
     const formData = new FormData(e.target)
+
+    const comment = formData.get('comment')
+    const image = formData.get('image')
+
+    if (!comment && !image) {
+      setError({form: 'Post must contain either an image or comment'})
+      return
+    }
 
     try {
       await fetch(`${API_ENDPOINT}/posts/${id}`, {
@@ -115,6 +125,7 @@ const Board = ({posts, boards}) => {
           </div>
 
           <div className="form__input-container -right">
+            <span className="form__error">{error?.form}</span>
             <button className="form__submit" type="submit">
               Publish
             </button>

@@ -28,6 +28,9 @@ postsRouter.post('/:board', upload.single('image'), async (req, res) => {
   try {
     const {name, email, title, comment, path} = req.body
 
+    if (!comment && !req.file)
+      throw new Error('Must provide either an image or comment')
+
     if (path) {
       const pathArr = JSON.parse(path)
       const board = await Board.findOne({_id: req.params.board})

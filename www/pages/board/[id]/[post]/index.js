@@ -34,6 +34,15 @@ const PostPage = ({post, boards}) => {
     }
 
     const formData = new FormData(e.target)
+
+    const comment = formData.get('comment')
+    const image = formData.get('image')
+
+    if (!comment && !image) {
+      setError({form: 'Reply must contain either an image or comment'})
+      return
+    }
+
     formData.set('path', JSON.stringify([post._id]))
 
     try {
@@ -120,6 +129,7 @@ const PostPage = ({post, boards}) => {
             </div>
 
             <div className="form__input-container -right">
+              <span className="form__error">{error?.form}</span>
               <button type="submit">Publish</button>
             </div>
           </form>
